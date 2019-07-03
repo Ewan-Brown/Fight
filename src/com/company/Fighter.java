@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class Fighter {
 
+    public Fighter(){
+        posn = Position.STANDING;
+    }
 
     public enum Position{
         STANDING,

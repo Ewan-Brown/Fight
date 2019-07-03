@@ -16,7 +16,7 @@ public class Main {
         int gameCount = 0;
 
         while(true){
-            System.out.println(gameCount);
+//            System.out.println(gameCount);
             gameCount++;
             if(f0.isReady()){
                 playerTurn(f0,f1);
@@ -29,6 +29,7 @@ public class Main {
 
     public static void playerTurn(Fighter player, Fighter opposition){
         String r = askAndScan("Fighter idle. What do now? (W)ait, (A)ttack, (P)osition");
+        System.out.println(player.getPosition());
         if(r.toUpperCase().contains("W")){
             player.setAction(new ActionWait(10,player));
         }
@@ -51,21 +52,8 @@ public class Main {
             boolean finished = false;
             while(!finished) {
                 finished = true;
-                String s = Main.askAndScan("What stance you wanting? (SCKL)");
-                switch(s.toUpperCase()){ //TODO Maybe use a hashmap here??? Would be very readable!
-                    case "S":
-                        newPos = Fighter.Position.STANDING;
-                        break;
-                    case "C":
-                        newPos = Fighter.Position.CROUCHING;
-                        break;
-                    case "K":
-                        newPos = Fighter.Position.KNEELING;
-                        break;
-                    case "L":
-                        newPos = Fighter.Position.LYING;
-                        break;
-                }
+                newPos = (Fighter.Position)UserInterface.<Fighter.Position>promptList("Change stance to : (C)rouch,(S)tand,(K)neeling,(L)ying","CSKL",
+                        Fighter.Position.CROUCHING,Fighter.Position.STANDING,Fighter.Position.KNEELING,Fighter.Position.LYING);
                 if (newPos == null || newPos == player.getPosition()) {
                     finished = false;
                     System.out.println("Hey this is not an allowed target position!");
