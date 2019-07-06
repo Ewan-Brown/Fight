@@ -16,49 +16,36 @@ public class Main {
         int gameCount = 0;
 
         while(true){
-//            System.out.println(gameCount);
+            System.out.println(gameCount);
             gameCount++;
             if(f0.isReady()){
+                System.out.println("Player 0 turn");
                 playerTurn(f0,f1);
             }
+            if(f1.isReady()) {
+                System.out.println("Player 1 turn");
+                playerTurn(f1, f0);
+            }
             f0.update();
+            f1.update();
 
         }
 
     }
 
-    public static void playerTurn(Fighter player, Fighter opposition){
+    public static void playerTurn(Fighter player, Fighter opposition){ //TODO Remove opposition here
         String r = askAndScan("Fighter idle. What do now? (W)ait, (A)ttack, (P)osition");
-        System.out.println(player.getPosition());
         if(r.toUpperCase().contains("W")){
             player.setAction(new ActionWait(10,player));
         }
         if(r.toUpperCase().contains("A")){
-            AttackData.AttackType type = null;
-            while(type == null){
-                String s = Main.askAndScan("What attack type you want? (P)unch, (K)ick");
-                switch(s.toUpperCase()){
-                    case "P":
-                        type = AttackData.AttackType.PUNCH;
-                        break;
-                    case "K":
-                        type = AttackData.AttackType.KICK;
-                }
-            }
+            AttackData.AttackType type = (AttackData.AttackType)UserInterface.promptList("What attack type do you want? (P)unch, (K)ick","PK",
+            AttackData.AttackType.PUNCH,AttackData.AttackType.KICK);
             player.setAction(new ActionAttack(10,player,new AttackData(player,opposition,type)));
         }
         if(r.toUpperCase().contains("P")){
-            Fighter.Position newPos = null;
-            boolean finished = false;
-            while(!finished) {
-                finished = true;
-                newPos = (Fighter.Position)UserInterface.<Fighter.Position>promptList("Change stance to : (C)rouch,(S)tand,(K)neeling,(L)ying","CSKL",
-                        Fighter.Position.CROUCHING,Fighter.Position.STANDING,Fighter.Position.KNEELING,Fighter.Position.LYING);
-                if (newPos == null || newPos == player.getPosition()) {
-                    finished = false;
-                    System.out.println("Hey this is not an allowed target position!");
-                }
-            }
+            Fighter.Position newPos = (Fighter.Position)UserInterface.promptList("Change stance to : (C)rouch,(S)tand,(K)neeling,(L)ying","CSKL",
+            Fighter.Position.CROUCHING,Fighter.Position.STANDING,Fighter.Position.KNEELING,Fighter.Position.LYING);
             player.setAction(new ActionChangeStance(10,player,newPos));
         }
     }

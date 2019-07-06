@@ -6,6 +6,7 @@ public class AttackData {
     Fighter target;
     AttackType type;
 
+    //TODO Add attack opts like heavy/light. Also add support for limb and weapon differentiation.z
     public AttackData(Fighter f0, Fighter f1, AttackType t){
         attacker = f0;
         target = f1;
@@ -18,7 +19,7 @@ public class AttackData {
 
     public void onSuccess(){ //If the attack successfully triggered. This passes it to attack manager who may decide he misses or something.
         System.out.println("Fighter attacked the thing!");
-        AttackManager.processAttack(this, attacker,target);
+        AttackManager.processAttack(this);
     }
 
     enum AttackType{
