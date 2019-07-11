@@ -36,14 +36,12 @@ public class Fighter {
     private Action action;
 
     public void update(){
-        try{
-            action.update();
-            if(action.isFinished()){
-                action = null;
-            }
-        }catch(NullPointerException e){
-            System.err.println("Hey this fighter [" + name + "] has a null Action and it tried to update! This is very illegal. Any key to continue");
-            String s = new Scanner(System.in).nextLine();
+        if(action == null){
+            System.err.println(name  + " has a null action! not allowed");
+        }
+        action.update();
+        if(action.isFinished()){
+            action = null;
         }
 
     }

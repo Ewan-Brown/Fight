@@ -70,6 +70,8 @@ public class Body {
         Limb lArm = new Limb(pre + "LowerArm");
         Limb hand = new Limb(pre + "Hand");
 
+        hand.setCanAttack(true);
+
         uArm.addChild(lArm);
         lArm.addChild(hand);
 
