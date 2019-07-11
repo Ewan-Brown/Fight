@@ -1,14 +1,20 @@
 package com.company;
 
 import com.company.Actions.Action;
+import com.company.Body.Body;
 
 import java.util.Scanner;
 
 public class Fighter {
 
-    public Fighter(){
+    public Fighter(String n){
         posn = Position.STANDING;
+        name = n;
     }
+
+    String name;
+
+    public Body b = Body.getBasicBody();
 
     public enum Position{
         STANDING,
@@ -36,7 +42,7 @@ public class Fighter {
                 action = null;
             }
         }catch(NullPointerException e){
-            System.err.println("Hey this fighter has a null Action and it tried to update! This is very illegal. Any key to continue");
+            System.err.println("Hey this fighter [" + name + "] has a null Action and it tried to update! This is very illegal. Any key to continue");
             String s = new Scanner(System.in).nextLine();
         }
 

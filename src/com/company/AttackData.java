@@ -1,16 +1,21 @@
 package com.company;
 
+import com.company.Body.Limb;
+
 public class AttackData {
 
     Fighter attacker;
     Fighter target;
     AttackType type;
+    Limb targetLimb;
+    Limb usedLimb;
 
-    //TODO Add attack opts like heavy/light. Also add support for limb and weapon differentiation.z
-    public AttackData(Fighter f0, Fighter f1, AttackType t){
+    public AttackData(Fighter f0, Fighter f1, AttackType type, Limb usedLimb, Limb targetLimb){
         attacker = f0;
         target = f1;
-        type = t;
+        this.type = type;
+        this.targetLimb = targetLimb;
+        this.usedLimb = usedLimb;
     }
 
     public void onFailure(){ //If the attack failed to occur - e.x interrupted
@@ -23,7 +28,7 @@ public class AttackData {
     }
 
     enum AttackType{
-        PUNCH,KICK
+        DESTROY, DISCONNECT
     }
 
 }

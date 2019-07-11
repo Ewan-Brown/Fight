@@ -3,20 +3,22 @@ package com.company;
 import com.company.Actions.ActionAttack;
 import com.company.Actions.ActionChangeStance;
 import com.company.Actions.ActionWait;
+import com.company.Body.Limb;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Fighter f0 = new Fighter();
-        Fighter f1 = new Fighter();
+        Fighter f0 = new Fighter("Fighter0");
+        Fighter f1 = new Fighter("Fighter1");
 
         int gameCount = 0;
 
         while(true){
-            System.out.println(gameCount);
+            System.out.println("GameCount : " + gameCount);
             gameCount++;
             if(f0.isReady()){
                 System.out.println("Player 0 turn");
@@ -39,9 +41,12 @@ public class Main {
             player.setAction(new ActionWait(10,player));
         }
         if(r.toUpperCase().contains("A")){
-            AttackData.AttackType type = (AttackData.AttackType)UserInterface.promptList("What attack type do you want? (P)unch, (K)ick","PK",
-            AttackData.AttackType.PUNCH,AttackData.AttackType.KICK);
-            player.setAction(new ActionAttack(10,player,new AttackData(player,opposition,type)));
+            AttackData.AttackType type = (AttackData.AttackType)UserInterface.promptNumberedList("What attack type", Arrays.asList(AttackData.AttackType.values()));
+
+            Limb lU = (Limb)UserInterface.promptNumberedList("What limb to use?",player.b.getAttackLimb());
+            Limb lT = (Limb)UserInterface.promptNumberedList("What limb to target?",opposition.b.limblist);
+
+            player.setAction(new ActionAttack(10,player,new AttackData(player,opposition,type,lU,lT)));
         }
         if(r.toUpperCase().contains("P")){
             Fighter.Position newPos = (Fighter.Position)UserInterface.promptList("Change stance to : (C)rouch,(S)tand,(K)neeling,(L)ying","CSKL",
