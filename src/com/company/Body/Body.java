@@ -57,7 +57,7 @@ public class Body {
 
         b.setOrigin(head);
 
-        head.setParent(null); //Origin limb!
+        head.setParent(torso); //Origin limb!
         head.addChild(torso);
         torso.addChild(armL);
         torso.addChild(armR);

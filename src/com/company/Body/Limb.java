@@ -20,8 +20,19 @@ public class Limb {
     ArrayList<Limb> children = new ArrayList<>();
     Limb parent;
 
+
+    //All these are from [0-1]d
+    double skinIntact;    //percent of skin left intact
+    double bruising;      //percent of bruising
+    double nerveHealth;   //percent nerve health
+    double boneStructure; //percent bone broken - .25 fractured, .50 broke, .75 pulverized?
+
+    Limb LimbUseTop; //pointer to the end of this limb 'link' Everything between the link and *this* is used for this limb's uses. Allows entire arm to have affect on hand use
+    enum LimbUse{
+        ATTACK,GRAB,BITE,BLOCK,
+    }
+
     boolean canAttack = false;
-    boolean canGrab;
 
     public Limb(String name){
         this.name = name;
@@ -29,7 +40,7 @@ public class Limb {
     }
 
     public void setCanAttack(boolean canAttack){
-        this.canAttack = true;
+        this.canAttack = canAttack;
     }
 
     public boolean canAttack(){
@@ -47,7 +58,6 @@ public class Limb {
 
     public void disconnect(){
         this.parent.children.remove(this);
-        this.children.remove(parent);
     }
 
     public void destroy(){
